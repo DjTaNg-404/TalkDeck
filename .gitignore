@@ -1,0 +1,41 @@
+.DS_Store
+Thumbs.db
+
+# Dependencies
+node_modules/
+app/node_modules/
+
+# Build output
+dist/
+out/
+app/dist/
+app/out/
+
+# Local caches
+.eslintcache
+app/.eslintcache
+.cache/
+
+# Local environment
+.env
+.env.*
+app/.env
+app/.env.*
+
+# Runtime data
+*.db
+*.sqlite
+*.sqlite3
+*.db-shm
+*.db-wal
+
+# Generated media and logs
+*.log
+*.log*
+*.wav
+*.webm
+*.mp3
+*.mp4
+
+# Vendored native build workspace created by scripts/setup-whisper.sh
+app/vendor/
