@@ -116,9 +116,7 @@ function SlideCanvas({
   const isThumb = mode === 'thumbnail'
   // 把最新 onChange 放进 ref，避免每次父组件重渲染都重建 handler
   const onChangeRef = useRef(onChange)
-  useEffect(() => {
-    onChangeRef.current = onChange
-  }, [onChange])
+  onChangeRef.current = onChange
   // Excalidraw 实际正在渲染哪一页：仅在 mount / updateScene 完成后更新。
   // 用于在跨页切换的中间态屏蔽陈旧的 onChange（闭包里 page 已是新页但画布还是旧页）。
   const displayedPageRef = useRef<number | null>(null)
@@ -180,7 +178,10 @@ function SlideCanvas({
   }
 
   return (
-    <div ref={containerRef} className={`size-full ${isThumb ? 'pointer-events-none' : ''}`}>
+    <div
+      ref={containerRef}
+      className={`size-full ${isThumb ? 'pointer-events-none' : ''}`}
+    >
       <Excalidraw
         excalidrawAPI={(api) => {
           apiRef.current = api
@@ -241,9 +242,9 @@ export function MinimalPreview({
   const [phase, setPhase] = useState<Phase>('loading')
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const [regeneratingIndex, setRegeneratingIndex] = useState<number | null>(null)
-  const [slideStatus, setSlideStatus] = useState<Record<number, 'queued' | 'streaming' | 'ready'>>(
-    {}
-  )
+  const [slideStatus, setSlideStatus] = useState<
+    Record<number, 'queued' | 'streaming' | 'ready'>
+  >({})
   const [exportMenuOpen, setExportMenuOpen] = useState(false)
   // 每页的重生成意见（focus 模式下可编辑）
   const [regenHints, setRegenHints] = useState<Record<number, string>>({})
@@ -651,7 +652,10 @@ export function MinimalPreview({
 
               {allHintExpanded && (
                 <>
-                  <div className="fixed inset-0 z-40" onClick={() => setAllHintExpanded(false)} />
+                  <div
+                    className="fixed inset-0 z-40"
+                    onClick={() => setAllHintExpanded(false)}
+                  />
                   <div className="absolute right-0 top-full mt-2 z-50 w-80 bg-white border border-gray-200 rounded-lg shadow-lg p-3 animate-in fade-in zoom-in-95 duration-150">
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-xs text-gray-500">
@@ -723,7 +727,10 @@ export function MinimalPreview({
 
               {exportMenuOpen && (
                 <>
-                  <div className="fixed inset-0 z-40" onClick={() => setExportMenuOpen(false)} />
+                  <div
+                    className="fixed inset-0 z-40"
+                    onClick={() => setExportMenuOpen(false)}
+                  />
                   <div className="absolute right-0 top-full mt-2 z-50 w-60 bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden animate-in fade-in zoom-in-95 duration-150">
                     <button
                       onClick={async () => {
@@ -883,7 +890,8 @@ export function MinimalPreview({
                 title="重新生成此页"
                 className="absolute top-3 right-3 z-10 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/90 backdrop-blur border border-gray-200 text-sm text-gray-600 hover:text-gray-900 hover:border-gray-900 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
               >
-                {regeneratingIndex === focusIndex || slideStatus[focusIndex] === 'streaming' ? (
+                {regeneratingIndex === focusIndex ||
+                slideStatus[focusIndex] === 'streaming' ? (
                   <Loader2 className="w-3.5 h-3.5 animate-spin" />
                 ) : (
                   <RefreshCw className="w-3.5 h-3.5" />
@@ -912,7 +920,9 @@ export function MinimalPreview({
               ) : (
                 <div className="border border-gray-200 rounded-lg p-3 bg-gray-50 animate-in fade-in slide-in-from-top-1 duration-200">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs text-gray-500">针对这一页的修改意见（可选）</span>
+                    <span className="text-xs text-gray-500">
+                      针对这一页的修改意见（可选）
+                    </span>
                     <button
                       onClick={() => setHintExpanded(false)}
                       className="p-1 rounded text-gray-400 hover:text-gray-900 transition-colors"
